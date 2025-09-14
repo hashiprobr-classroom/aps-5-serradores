@@ -9,10 +9,14 @@ public class Cobrador{
         this.conversas = conversas;
     }
 
-    public boolean calculaTotal(Usuario usuario){
+    public double calculaTotal(Usuario usuario){
+        double soma = 0;
         for (Conversa c : conversas){
-            c.calculaSubTotal()
+            if(c.getUsuario().getEmail().equals(usuario.getEmail())){
+                soma += c.calculaSubTotal();
+            }
         }
+        return soma;
     }
 
 }

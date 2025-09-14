@@ -9,16 +9,15 @@ public class Conversa {
 
     public Conversa(Usuario usuario) {
         this.usuario = usuario;
-        List<Prompt> prompts = new ArrayList<>();
+        this.prompts = new ArrayList<>();
     }
 
     public Usuario getUsuario() {
         return usuario;
     }
 
-    public Prompt adiciona(Prompt prompt){
+    public void adiciona(Prompt prompt){
         prompts.add(prompt);
-        return prompt;
     }
 
     public double calculaSubTotal() {
@@ -30,7 +29,7 @@ public class Conversa {
     }
     public double calculaSubMedia(){
         if (prompts.isEmpty()) {
-            throw new IllegalArgumentException("Nenhum Prompt!");
+            throw new IllegalStateException("Nenhum prompt!");
         }else{
             return calculaSubTotal()/prompts.size();
         }
