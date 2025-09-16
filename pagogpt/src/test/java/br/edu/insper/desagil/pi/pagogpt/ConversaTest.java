@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ConversaTest {
     private Conversa conversa;
@@ -21,14 +23,22 @@ public class ConversaTest {
 
     @Test
     void subTotal() {
-        PromptPago prompt1 = new PromptPago("teste1",1);
-        PromptPago prompt2 = new PromptPago("teste2",0.5);
-        PromptPago prompt3 = new PromptPago("teste3",0.25);
-        conversa.adiciona(prompt1);
-        conversa.adiciona(prompt2);
-        conversa.adiciona(prompt3);
-        assertEquals(10.5,conversa.calculaSubTotal(),1e-2);
+        Prompt p1 = mock(Prompt.class);
+        Prompt p2 = mock(Prompt.class);
+        Prompt p3 = mock(Prompt.class);
+
+        // define comportamentos
+        when(p1.calculaPreco()).thenReturn(1.0);
+        when(p2.calculaPreco()).thenReturn(0.5);
+        when(p3.calculaPreco()).thenReturn(0.25);
+
+        conversa.adiciona(p1);
+        conversa.adiciona(p2);
+        conversa.adiciona(p3);
+
+        assertEquals(1.75, conversa.calculaSubTotal(), 1e-2);
     }
+
 
     @Test
     void porPostVazio() {
@@ -40,12 +50,20 @@ public class ConversaTest {
 
     @Test
     void porPost() {
-        PromptPago prompt1 = new PromptPago("teste1",1);
-        PromptPago prompt2 = new PromptPago("teste2",0.5);
-        PromptPago prompt3 = new PromptPago("teste3",0.25);
-        conversa.adiciona(prompt1);
-        conversa.adiciona(prompt2);
-        conversa.adiciona(prompt3);
-        assertEquals(3.5,conversa.calculaSubMedia(),1e-2);
+        // cria mocks de Prompt
+        Prompt p1 = mock(Prompt.class);
+        Prompt p2 = mock(Prompt.class);
+        Prompt p3 = mock(Prompt.class);
+
+        // define comportamentos
+        when(p1.calculaPreco()).thenReturn(5.0);
+        when(p2.calculaPreco()).thenReturn(5.5);
+        when(p3.calculaPreco()).thenReturn(5.25);
+
+        conversa.adiciona(p1);
+        conversa.adiciona(p2);
+        conversa.adiciona(p3);
+
+        assertEquals(5.25, conversa.calculaSubMedia(), 1e-2);
     }
 }
