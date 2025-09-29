@@ -2,21 +2,27 @@ package br.edu.insper.desagil.pi.pagogpt;
 
 import java.util.List;
 
-public class Cobrador{
-    private List<Conversa> conversas;
+public class Cobrador {
+    private List<Conversa>conversas;
+    public Cobrador( List<Conversa>conversas){
+        this.conversas=conversas;
 
-    public Cobrador(List<Conversa> conversas) {
-        this.conversas = conversas;
     }
-
-    public double calculaTotal(Usuario usuario){
-        double soma = 0;
-        for (Conversa c : conversas){
-            if(c.getUsuario().getEmail().equals(usuario.getEmail())){
-                soma += c.calculaSubTotal();
+    public double calculaTotal(Usuario usuario) {
+        double total =0;
+        String email= usuario.getEmail();
+        for(Conversa conversa: conversas){
+            Usuario usuario_analisado = conversa.getUsuario();
+            String email_analisado= usuario_analisado.getEmail();
+            if(email.equals(email_analisado)){
+                total+=conversa.calculaSubTotal();
             }
+
         }
-        return soma;
+        return total;
+
+
     }
+
 
 }

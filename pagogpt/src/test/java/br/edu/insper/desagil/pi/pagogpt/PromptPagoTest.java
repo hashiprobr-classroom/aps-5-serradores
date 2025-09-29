@@ -6,25 +6,29 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class PromptPagoTest {
+    private Prompt e;
+    private static final double DELTA = 0.01;
+
+
     @Test
-    void constroi() {
-        PromptPago prompt = new PromptPago("pergunta", 0.5);
-        assertEquals("pergunta", prompt.getPergunta());
-        assertNull(prompt.getResposta());
+    public void constroi(){
+        e=new PromptPago(5,"pergunta");
+        assertEquals("pergunta",e.getPergunta());
+        assertNull(e.getResposta());
+    }
+    @Test
+    public void mudaResposta(){
+        e=new PromptPago(5,"pergunta");
+        e.setResposta("resposta");
+        assertEquals("resposta",e.getResposta());
+    }
+    @Test
+
+    public void preco(){
+        e=new PromptPago(0.1,"pergunta");
+        assertEquals(0.8,e.calculaPreco());
 
     }
 
-    @Test
-    void mudaResposta() {
-        PromptPago prompt = new PromptPago("pergunta", 0.5);
-        prompt.setResposta("resposta");
-        assertEquals("resposta",prompt.getResposta());
-    }
-
-    @Test
-    void preco() {
-        PromptPago prompt = new PromptPago("pergunta", 0.1);
-        assertEquals(0.8,prompt.calculaPreco(),1e-2);
-    }
 }
 

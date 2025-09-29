@@ -7,90 +7,82 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class CobradorTest {
-    private Usuario usuario1;
+    private Cobrador cobrador;
+    Usuario usuario1 = new Usuario("josephperl@gmail.com", "Joseph");
+    Usuario usuario2 = new Usuario("josephperll@gmail.com", "Joseph");
+    Usuario usuario3 = new Usuario("josephperlll@gmail.com", "Joseph");
+    List<Conversa> conversas;
 
-    private Conversa conversa1;
-    private Conversa conversa2;
-    private Conversa conversa3;
-
-    private List<Conversa> conversas;
 
     @BeforeEach
-    void setUp() {
-        usuario1 = new Usuario("test1@gmail.com","test1");
-        Usuario usuario2 = new Usuario("test2@gmail.com", "test2");
-        Usuario usuario3 = new Usuario("test3@gmail.com", "test3");
-
-        conversa1 = new Conversa(usuario1);
-        conversa2 = new Conversa(usuario2);
-        conversa3 = new Conversa(usuario3);
-
+    public void setUp(){
         conversas = new ArrayList<>();
-        conversas.add(conversa1);
-        conversas.add(conversa2);
-        conversas.add(conversa3);
-    }
+        cobrador=new Cobrador(conversas);
 
+    }
     @Test
-    void nenhumaValida() {
-        Usuario usuarioFora  = new Usuario("fora@gmail.com","outro");
-
-        Cobrador cobrador1 = new Cobrador(conversas);
-        assertEquals(0,cobrador1.calculaTotal(usuarioFora));
+    public void nenhumaValida(){
+        assertEquals(0,cobrador.calculaTotal(usuario1));
     }
-
     @Test
-    void umaValida() {
-        PromptPago prompt = new PromptPago("teste1",1);
+    public void nehumaValida(){
 
-        conversa1.adiciona(prompt);
+        Conversa valida= mock(Conversa.class);
+        when(valida.getUsuario()).thenReturn(usuario1);
+        when(valida.calculaSubTotal()).thenReturn(2.5);
+        Conversa falsa1= mock(Conversa.class);
+        when(falsa1.getUsuario()).thenReturn(usuario2);
+        when(falsa1.calculaSubTotal()).thenReturn(2.5);
+        Conversa falsa2= mock(Conversa.class);
+        when(falsa2.getUsuario()).thenReturn(usuario3);
+        when(falsa2.calculaSubTotal()).thenReturn(2.5);
+        conversas.add(valida);
+        conversas.add(falsa1);
+        conversas.add(falsa2);
+        assertEquals(2.5,cobrador.calculaTotal(usuario1));
 
-        Cobrador cobrador1 = new Cobrador(conversas);
-        assertEquals(6,cobrador1.calculaTotal(usuario1));
 
     }
-
     @Test
-    void duasValidas() {
-        conversa1 = new Conversa(usuario1);
-        conversa2 = new Conversa(usuario1);
 
-        conversas = new ArrayList<>();
-        conversas.add(conversa1);
-        conversas.add(conversa2);
+    public void duasValida(){
+        Conversa valida= mock(Conversa.class);
+        when(valida.getUsuario()).thenReturn(usuario1);
+        when(valida.calculaSubTotal()).thenReturn(2.5);
+        Conversa valida1= mock(Conversa.class);
+        when(valida1.getUsuario()).thenReturn(usuario1);
+        when(valida1.calculaSubTotal()).thenReturn(2.5);
+        Conversa falsa= mock(Conversa.class);
+        when(falsa.getUsuario()).thenReturn(usuario2);
+        when(falsa.calculaSubTotal()).thenReturn(2.5);
+        conversas.add(valida);
+        conversas.add(valida1);
+        conversas.add(falsa);
+        assertEquals(5.0,cobrador.calculaTotal(usuario1));
 
-        PromptPago prompt1 = new PromptPago("teste1",1);
-        PromptPago prompt2 = new PromptPago("teste2",1);
-
-        conversa1.adiciona(prompt1);
-        conversa2.adiciona(prompt2);
-
-        Cobrador cobrador1 = new Cobrador(conversas);
-        assertEquals(12,cobrador1.calculaTotal(usuario1));
     }
-
     @Test
-    void tresValidas() {
-        conversa1 = new Conversa(usuario1);
-        conversa2 = new Conversa(usuario1);
-        conversa3 = new Conversa(usuario1);
 
-        conversas = new ArrayList<>();
-        conversas.add(conversa1);
-        conversas.add(conversa2);
-        conversas.add(conversa3);
+    public void tresValida(){
+        Conversa valida= mock(Conversa.class);
+        when(valida.getUsuario()).thenReturn(usuario1);
+        when(valida.calculaSubTotal()).thenReturn(2.5);
+        Conversa valida1= mock(Conversa.class);
+        when(valida1.getUsuario()).thenReturn(usuario1);
+        when(valida1.calculaSubTotal()).thenReturn(2.5);
+        Conversa valida2= mock(Conversa.class);
+        when(valida2.getUsuario()).thenReturn(usuario1);
+        when(valida2.calculaSubTotal()).thenReturn(2.5);
+        conversas.add(valida);
+        conversas.add(valida1);
+        conversas.add(valida2);
+        assertEquals(7.5,cobrador.calculaTotal(usuario1));
 
-        PromptPago prompt1 = new PromptPago("teste1",1);
-        PromptPago prompt2 = new PromptPago("teste2",1);
-        PromptPago prompt3 = new PromptPago("teste3",1);
-
-        conversa1.adiciona(prompt1);
-        conversa2.adiciona(prompt2);
-        conversa3.adiciona(prompt3);
-
-        Cobrador cobrador1 = new Cobrador(conversas);
-        assertEquals(18,cobrador1.calculaTotal(usuario1));
     }
+
+
 }
