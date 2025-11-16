@@ -15,19 +15,23 @@ public class Clinica {
         return historicos;
     }
 
-    public void addHistoricoCachorro(String nomeTutor, String nome, LocalDate dataNascimento, double peso, String tipoBanho) {
-        historicos.add(new Historico(nomeTutor, nome, 0, dataNascimento, peso, tipoBanho));
+    public void addHistorico(Historico hitoricos) {
+        historicos.add(hitoricos);
     }
 
-    public void addHistoricoGato(String nomeTutor, String nome, LocalDate dataNascimento, double peso, String doenca) {
-        historicos.add(new Historico(nomeTutor, nome, 1, dataNascimento, peso, doenca));
+    public void addHistoricoCachorro(String nome, LocalDate dataNascimento, double peso, String tipoBanho) {
+        historicos.add(new HistoricoCachorro(nome, dataNascimento, peso, tipoBanho));
     }
 
-    public void addHistoricoCobra(String nomeTutor, String nome, LocalDate dataNascimento, double peso, boolean venenosa) {
-        historicos.add(new Historico(nomeTutor, nome, 2, dataNascimento, peso, Boolean.toString(venenosa)));
+    public void addHistoricoGato(String nome, LocalDate dataNascimento, double peso, String doenca ) {
+        historicos.add(new HistoricoGato(nome, dataNascimento, peso, doenca));
     }
 
-    public void addHistoricoElefante(String nomeTutor, String nome, LocalDate dataNascimento, double peso, int pesoComida) {
-        historicos.add(new Historico(nomeTutor, nome, 3, dataNascimento, peso, Integer.toString(pesoComida)));
+    public void addHistoricoCobra(String nome, LocalDate dataNascimento, double peso, boolean venenosa ) {
+        historicos.add(new HistoricoCobra(nome, dataNascimento, peso, venenosa));
+    }
+
+    public void addHistoricoElefante(String nome, LocalDate dataNascimento, double peso, int comida ) {
+        historicos.add(new HistoricoElefante(nome, dataNascimento, peso, comida));
     }
 }
