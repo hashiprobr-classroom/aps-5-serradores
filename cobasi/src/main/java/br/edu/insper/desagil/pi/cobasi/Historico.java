@@ -3,43 +3,20 @@ package br.edu.insper.desagil.pi.cobasi;
 import java.time.LocalDate;
 
 public class Historico {
-    private String nomeTutor;
-    private String enderecoTutor;
-    private String telefoneTutor;
+    private Tutor tutor;
     private String nome;
     private int tipo;
     private LocalDate dataNascimento;
     private double peso;
     private String extra;
 
-    public Historico(String nomeTutor, String nome, int tipo, LocalDate dataNascimento, double peso, String extra) {
-        this.nomeTutor = nomeTutor;
-        this.enderecoTutor = null;
-        this.telefoneTutor = null;
+    public Historico(Tutor tutor, String nome, int tipo, LocalDate dataNascimento, double peso, String extra) {
+        this.tutor=tutor;
         this.nome = nome;
         this.tipo = tipo;
         this.dataNascimento = dataNascimento;
         this.peso = peso;
         this.extra = extra;
-    }
-
-    public void setEnderecoTutor(String enderecoTutor) {
-        this.enderecoTutor = enderecoTutor;
-    }
-
-    public void setTelefoneTutor(String telefoneTutor) {
-        this.telefoneTutor = telefoneTutor;
-    }
-
-    public String resumoTutor() {
-        String summary = "Tutor: " + nomeTutor + "\n";
-        if (enderecoTutor != null) {
-            summary += "Endereço: " + enderecoTutor + "\n";
-        }
-        if (telefoneTutor != null) {
-            summary += "Telefone: " + telefoneTutor + "\n";
-        }
-        return summary;
     }
 
     public String resumo() {
