@@ -9,47 +9,42 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class ConversaTest {
-    private static final double DELTA=0.01;
-    private Conversa conversa;
-    private Prompt promptFalso(double valor){
-        Prompt prompt=mock(Prompt.class);
-        when(prompt.calculaPreco()).thenReturn(valor);
+    private static final double DELTA= 0.01;
+    private Conversa s;
+    private Prompt promptfalso(double preco){
+        PromptGratuito prompt = mock(PromptGratuito.class);
+        when(prompt.calculaPreco()).thenReturn(preco);
         return prompt;
     }
     @BeforeEach
     public void setUp(){
-        Usuario usuarioFalso=mock(Usuario.class);
-        conversa=new Conversa(usuarioFalso);
-
+        Usuario usuariofalso=mock(Usuario.class);
+        s= new Conversa(usuariofalso);
     }
     @Test
     public void subTotalVazio(){
-        assertEquals(0,conversa.calculaSubTotal());
+        assertEquals(0,s.calculaSubTotal());
     }
     @Test
     public void subTotal(){
-        conversa.adiciona(promptFalso(5));
-        conversa.adiciona(promptFalso(5.1));
-        conversa.adiciona(promptFalso(5.23));
-        assertEquals(15.33,conversa.calculaSubTotal(),DELTA);
+        s.adiciona(promptfalso(1));
+        s.adiciona(promptfalso(1.1));
+        s.adiciona(promptfalso(1.11));
+        assertEquals(3.21,s.calculaSubTotal(),DELTA);
 
     }
     @Test
     public void porPostVazio(){
-        IllegalStateException e=assertThrows(IllegalStateException.class,()->{conversa.calculaSubMedia();});
+        IllegalStateException e=assertThrows(IllegalStateException.class,()->{s.calculaSubMedia();});
         assertEquals("Nenhum prompt!",e.getMessage());
-
     }
     @Test
     public void porPost(){
-        conversa.adiciona(promptFalso(5));
-        conversa.adiciona(promptFalso(5.1));
-        conversa.adiciona(promptFalso(5.23));
-        assertEquals(5.11,conversa.calculaSubMedia(),DELTA);
-
+        s.adiciona(promptfalso(1));
+        s.adiciona(promptfalso(1.1));
+        s.adiciona(promptfalso(1.11));
+        assertEquals(1.07,s.calculaSubTotal(),DELTA);
 
     }
-
-
 
 }
