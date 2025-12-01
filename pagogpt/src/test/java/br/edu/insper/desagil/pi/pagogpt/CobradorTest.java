@@ -11,52 +11,49 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class CobradorTest {
+    private Cobrador c;
+    private  List<Conversa> conversas;
     private Usuario usuariofalso(String email){
-        Usuario usuario = mock(Usuario.class);
+        Usuario usuario= mock(Usuario.class);
         when(usuario.getEmail()).thenReturn(email);
         return usuario;
     }
-    private Conversa conversafalsa(Usuario usuario , double total){
+    private Conversa conversafalsa(Usuario usuario,double valor){
         Conversa conversa = mock(Conversa.class);
         when(conversa.getUsuario()).thenReturn(usuario);
-        when(conversa.calculaSubTotal()).thenReturn(total);
+        when(conversa.calculaSubTotal()).thenReturn(valor);
         return conversa;
     }
-    private Cobrador d;
-    private List<Conversa>conversas;
     @BeforeEach
     public void setUp(){
         conversas= new ArrayList<>();
-        d=new Cobrador(conversas);
+        c=new Cobrador(conversas);
     }
     @Test
     public void nenhumaValida(){
-        assertEquals(0,d.calculaTotal(usuariofalso("teste@")));
+        assertEquals(0,c.calculaTotal(usuariofalso("@")));
     }
     @Test
-    public void umavalida(){
+    public void umaValida(){
         conversas.add(conversafalsa(usuariofalso("@"),10));
-        conversas.add(conversafalsa(usuariofalso("@g"),10));
-        conversas.add(conversafalsa(usuariofalso("@gs"),10));
-        assertEquals(10,d.calculaTotal(usuariofalso("@")));
-
-    }
-    @Test
-    public void duasValida(){
-        conversas.add(conversafalsa(usuariofalso("@"),10));
-        conversas.add(conversafalsa(usuariofalso("@"),20));
         conversas.add(conversafalsa(usuariofalso("@s"),10));
-        assertEquals(30,d.calculaTotal(usuariofalso("@")));
-
-
+        conversas.add(conversafalsa(usuariofalso("@ss"),10));
+        assertEquals(10,c.calculaTotal(usuariofalso("@")));
     }
     @Test
-    public void tresValida(){
+    public void duasValidas(){
         conversas.add(conversafalsa(usuariofalso("@"),10));
-        conversas.add(conversafalsa(usuariofalso("@"),20));
         conversas.add(conversafalsa(usuariofalso("@"),10));
-        assertEquals(40,d.calculaTotal(usuariofalso("@")));
-
-
+        conversas.add(conversafalsa(usuariofalso("@ss"),10));
+        assertEquals(20,c.calculaTotal(usuariofalso("@")));
     }
+    @Test
+    public void tresValidas(){
+        conversas.add(conversafalsa(usuariofalso("@"),10));
+        conversas.add(conversafalsa(usuariofalso("@"),10));
+        conversas.add(conversafalsa(usuariofalso("@"),10));
+        assertEquals(30,c.calculaTotal(usuariofalso("@")));
+    }
+
+    
 }

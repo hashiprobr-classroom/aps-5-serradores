@@ -9,42 +9,40 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class ConversaTest {
-    private static final double DELTA= 0.01;
-    private Conversa s;
-    private Prompt promptfalso(double preco){
-        PromptGratuito prompt = mock(PromptGratuito.class);
-        when(prompt.calculaPreco()).thenReturn(preco);
-        return prompt;
+    private PromptPago promptfalso(double valor){
+        PromptPago p = mock(PromptPago.class);
+        when(p.calculaPreco()).thenReturn(valor);
+        return p;
     }
+    private Conversa c;
+    private static final double DELTA=0.01;
     @BeforeEach
     public void setUp(){
         Usuario usuariofalso=mock(Usuario.class);
-        s= new Conversa(usuariofalso);
+        c=new Conversa(usuariofalso);
     }
     @Test
     public void subTotalVazio(){
-        assertEquals(0,s.calculaSubTotal());
+        assertEquals(0,c.calculaSubTotal());
     }
     @Test
     public void subTotal(){
-        s.adiciona(promptfalso(1));
-        s.adiciona(promptfalso(1.1));
-        s.adiciona(promptfalso(1.11));
-        assertEquals(3.21,s.calculaSubTotal(),DELTA);
-
+        c.adiciona(promptfalso(1));
+        c.adiciona(promptfalso(1.1));
+        c.adiciona(promptfalso(1.11));
+        assertEquals(3.21,c.calculaSubTotal(),DELTA);
     }
     @Test
     public void porPostVazio(){
-        IllegalStateException e=assertThrows(IllegalStateException.class,()->{s.calculaSubMedia();});
+        IllegalStateException e= assertThrows(IllegalStateException.class,()->{c.calculaSubMedia();});
         assertEquals("Nenhum prompt!",e.getMessage());
     }
     @Test
     public void porPost(){
-        s.adiciona(promptfalso(1));
-        s.adiciona(promptfalso(1.1));
-        s.adiciona(promptfalso(1.11));
-        assertEquals(1.07,s.calculaSubTotal(),DELTA);
-
+        c.adiciona(promptfalso(1));
+        c.adiciona(promptfalso(1.1));
+        c.adiciona(promptfalso(1.11));
+        assertEquals(1.07,c.calculaSubMedia(),DELTA);
     }
 
 }

@@ -9,5 +9,4 @@ public class PromptPago extends Prompt{
     @Override
     public double calculaPreco(){return 0.0;}
 
-
 }

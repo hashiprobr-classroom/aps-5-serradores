@@ -8,11 +8,11 @@ public class Conversa {
     private List<Prompt>prompts;
     public Conversa(Usuario usuario){
         this.usuario=usuario;
-        this.prompts= new ArrayList<>();
+        this.prompts=new ArrayList<>();
     }
     public Usuario getUsuario(){return usuario;}
 
-    public void adiciona(Prompt prompt){};
+    public void adiciona(Prompt prompt){}
     public double calculaSubTotal(){return 0.0;}
     public double calculaSubMedia(){return 0.0;}
 
